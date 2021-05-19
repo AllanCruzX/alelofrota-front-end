@@ -1,0 +1,89 @@
+<div class="container main-container">
+
+  <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="line-scale-pulse-out" [fullScreen]="true">
+    <p style="color: white"> Processando... </p>
+</ngx-spinner>
+
+    <h3>Editar Veículo com a placa - {{ veiculoModel.placa }}</h3>
+
+    <hr>
+    <div class="row">
+        <div class="col-md-10">
+            <form enctype="multipart/form-data" (ngSubmit)="editarVeiculo()" [formGroup]="veiculoForm">
+
+              <div class="alert alert-danger" *ngIf="errors.length > 0">
+                <h3 id="msgRetorno">Opa! Alguma coisa não deu certo:</h3>
+                <ul>
+
+                    <li *ngFor="let error of errors"> {{ error.userMessage }} </li>
+
+                </ul>
+            </div>
+
+
+                <div class="form-group">
+                  <label class="control-label">Placa</label>
+                  <div>
+                      <input class="form-control" id="placa" type="text" placeholder="Placa (requerido)" formControlName="placa" [ngClass]="{'is-invalid': displayMessage.placa }" />
+                      <span class="text-danger" *ngIf="displayMessage.placa">
+                          <p [innerHTML]="displayMessage.placa"></p>
+                      </span>
+                  </div>
+              </div>
+
+
+              <div class="form-group">
+                <label class="control-label">Fabricante</label>
+                <div>
+                  <select class="form-control" id="fabricante" formControlName="fabricante">
+                    <option *ngFor="let fabricante of fabricantes" [value]="fabricante.id" [ngClass]="{'is-invalid': displayMessage.fabricante }">{{ fabricante.nome }} </option>
+                  </select>
+
+                    <span class="text-danger" *ngIf="displayMessage.fabricante">
+                        <p [innerHTML]="displayMessage.fabricante"></p>
+                    </span>
+                </div>
+            </div>
+
+
+            <div class="form-group">
+              <label class="control-label">Modelo</label>
+              <div>
+                <select class="form-control" id="modelo" formControlName="modelo">
+                  <option *ngFor="let modelo of modelos" [value]="modelo.id" [ngClass]="{'is-invalid': displayMessage.modelo }">{{ modelo.nome }} </option>
+                </select>
+
+                  <span class="text-danger" *ngIf="displayMessage.modelo">
+                      <p [innerHTML]="displayMessage.modelo"></p>
+                  </span>
+              </div>
+          </div>
+
+
+          <div class="form-group">
+            <label class="control-label">Status</label>
+            <div>
+              <div id="newsletter" class="row">
+                <div class="col-sm-4" *ngFor="let item of listStatus">
+                  <label class="radio-inline">
+                    <input type="radio"  id="status" formControlName="status" [value]="item.valor" [ngClass]="{'is-invalid': displayMessage.status }"/> {{ item.desc }}
+
+                  </label>
+                </div>
+              </div>
+
+
+                <span class="text-danger" *ngIf="displayMessage.modelo">
+                    <p [innerHTML]="displayMessage.modelo"></p>
+                </span>
+            </div>
+        </div>
+
+                <div class="form-group">
+                    <input type="submit" [disabled]="!veiculoForm.valid" value="Editar" class="btn btn-primary">&nbsp;
+                    <a class="btn btn-info" href="/veiculos/listar-todos">Voltar</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

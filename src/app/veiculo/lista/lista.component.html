@@ -1,0 +1,77 @@
+<div class="container main-container">
+
+    <h1>Lista de Veiculos</h1>
+    <hr>
+
+    <p>
+        <a class="btn btn-info" [routerLink]="['/veiculos/adicionar-novo']">Novo Veículo</a>
+    </p>
+
+    <div class="form-group">
+      <label class="control-label">Placa</label>
+      <div>
+        <input id="placaId" class="form-control" type="text" placeholder="Placa" pInputText
+        [(ngModel)]="filtro.placa">
+      </div>
+
+  </div>
+
+  <div class="form-group ">
+
+    <button type="submit" class="btn btn-fill btn-info" href="javascript:void(0)"
+      (click)="consultar()">Pesquisar</button>
+
+</div>
+
+    <p-table [columns]="cols" [value]="veiculos" [lazy]="true" (onLazyLoad)="carregaVeiculos($event)"
+                            [paginator]="true" [rows]="10" [totalRecords]="totalVeiculos" [loading]="carregar"
+                            styleClass="p-datatable-responsive-demo p-datatable-gridlines">
+                            <ng-template pTemplate="header" let-columns>
+                                <tr>
+                                    <th *ngFor="let col of columns">
+                                        {{col.header}}
+                                    </th>
+
+                                    <th class="col-acoes-header">Ações</th>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body" let-rowData let-columns="columns">
+                                <tr>
+                                    <td>{{rowData.id}}</td>
+                                    <td>{{rowData.placa }}</td>
+                                    <td>{{rowData.modelo.nome}}</td>
+                                    <td>{{rowData.modelo.fabricante.nome}}</td>
+                                    <td>{{rowData.status == true ? 'Ativo' : 'Inativo' }}</td>
+
+
+                                    <td class="col-acoes">
+
+                                      <div class="div__botao">
+
+                                            <button pButton icon="pi pi-pencil " pTooltip="Editar" tooltipPosition="top"
+                                                [routerLink]="['/veiculos/editar',rowData.id]">
+                                            </button>
+
+                                          </div>
+
+                                          <div class="div__botao">
+
+                                            <button pButton icon="pi pi-trash " pTooltip="Ecluir" tooltipPosition="top"
+                                                [routerLink]="['/veiculos/excluir',rowData.id]">
+                                            </button>
+
+                                          </div>
+
+
+
+                                    </td>
+
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="summary">
+                                <div class="p-d-flex p-ai-center p-jc-between">
+                                    Total de veículos : {{totalVeiculos ? totalVeiculos : 0}}
+                                </div>
+                            </ng-template>
+                        </p-table>
+</div>
